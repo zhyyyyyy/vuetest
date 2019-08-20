@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <style>li{
+        border: 1px dashed #235223;
+        line-height: 40px;
+        padding-left: 15px;
+        margin-bottom: 30px;
+        width: 100%;
+    }
+    .v-enter,.v-leave-to
+    {
+        opacity: 0;
+        transform: translatey(80px);
+    }
+    .v-enter-active,
+    .v-leave-active
+    {
+        transition: all 0.6s ease;
+    }
+    li:hover{
+        background-color: hotpink;
+        transition: all 0.8s ease;
+    }
+    /* v-move ,v-leave配合使用实现列表后续的元素飘上来 */
+    .v-move
+    {
+        transition: all 0.6s ease；
+    }
+    .v-leave-active{
+        position: absolute;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+        <label>id: 
+            <input type="text" v-model="id"> 
+            name:
+            <input type="text" v-model="name">
+        </label>
+        <input type="button" value="添加" @click="add">
+        </div>
+          <transition-group>
+                <ul v-for="(item,i) in list " :key="item.id" @click="del(i)">
+                  <li>id: {{item.id  }} --- name:{{ item.name}}</li> 
+                </ul>
+          </transition-group>
+    </div>
+    <script>
+        var vm=new Vue({
+           el:'#app',
+           data:{
+               id:'',
+               name:'',
+               list:[{id:01,name:"cy"},{id:02,name:"zhy"}]
+           },
+           methods:{
+               add()
+               {this.list.push({id:this.id,name:this.name})
+               this.id=this.name=''
+               },
+               del(i)
+               {
+                   this.list.splice(i,1)
+               }
+
+           }
+        });
+    </script>
+</body>
+
+</html>
